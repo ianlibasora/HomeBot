@@ -17,7 +17,6 @@ client = commands.Bot(command_prefix="!")
 @client.event
 async def on_ready():
    """Reports when main bot is ready"""
-   # print("AviationBot main ready")
 
 @client.command()
 async def ping(ctx):

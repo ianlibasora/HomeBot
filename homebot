@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # HomeBot runner script
-python3 ./HomeMain.py
+exec python3 ./HomeMain.py
