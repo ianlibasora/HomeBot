@@ -35,13 +35,28 @@ class Weather(commands.Cog):
       else:
          return f"Warning, web error occured. Code: {web.status_code}"
 
+   @staticmethod
+   def SyncTAF(apt="EIDW"):
+      """SYNC Web request airport TAF data"""
+
+      url = f"https://aviationweather.gov/taf/data?ids={apt}"
+      web = requests.get(url, timeout=10)
+      if web.ok:
+         soup = BeautifulSoup(web.text, "html.parser")
+         try:
+            return soup.code.text
+         except AttributeError:
+            return "Invalid Airport Code"
+      else:
+         return f"Warning, web error occured. Code: {web.status_code}"
+
 def setup(client):
    client.add_cog(Weather(client))
 
 def main():
    """Local main() for testing"""
-   a = Weather.SyncMETAR("EGLL")
-   b = Weather.SyncMETAR()
+   a = Weather.SyncTAF("EGLL")
+   b = Weather.SyncTAF()
    print(a)
    print(b)
 
