@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 from bs4 import BeautifulSoup
 import requests
+import aiohttp
 
 class Weather(commands.Cog):
    """
@@ -50,6 +51,25 @@ class Weather(commands.Cog):
       else:
          return f"Warning, web error occured. Code: {web.status_code}"
 
+   @staticmethod
+   async def AsyncMETAR(apt="EIDW"):
+      """ASYNC Web request airport METAR data"""
+
+      url = f"https://aviationweather.gov/metar/data?ids={apt}"
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as sesh:
+         async with sesh.get(url) as web_resp:
+            if web_resp.status == 200:
+               web = await web_resp.text()
+               soup = BeautifulSoup(web, "html.parser")
+               try:
+                  return soup.code.text
+               except AttributeError:
+                  return "Invalid airport Code"
+            else:
+               return "Warning, web error occured. Code: {web_resp.status}"
+      return "Warning, request timeout"
+
 def setup(client):
    client.add_cog(Weather(client))
 
@@ -60,5 +80,14 @@ def main():
    print(a)
    print(b)
 
+async def amain():
+   """Local async main for testing"""
+   a = await Weather.AsyncMETAR()
+   b = await Weather.AsyncMETAR("EGLL")
+   print(a)
+   print(b)
+
 if __name__ == "__main__":
-   main()
+   # main()
+   import asyncio
+   asyncio.run(amain())
