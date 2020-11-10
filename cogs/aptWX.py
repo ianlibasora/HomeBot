@@ -70,6 +70,25 @@ class Weather(commands.Cog):
                return "Warning, web error occured. Code: {web_resp.status}"
       return "Warning, request timeout"
 
+   @staticmethod
+   async def AsyncTAF(apt="EIDW"):
+      """ASYNC Web request airport TAF data"""
+
+      url = f"https://aviationweather.gov/taf/data?ids={apt}"
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as sesh:
+         async with sesh.get(url) as web_resp:
+            if web_resp.status == 200:
+               web = await web_resp.text()
+               soup = BeautifulSoup(web, "html.parser")
+               try:
+                  return soup.code.text
+               except AttributeError:
+                  return "Invalid airport Code"
+            else:
+               return "Warning, web error occured. Code: {web_resp.status}"
+      return "Warning, request timeout"
+
 def setup(client):
    client.add_cog(Weather(client))
 
@@ -82,8 +101,8 @@ def main():
 
 async def amain():
    """Local async main for testing"""
-   a = await Weather.AsyncMETAR()
-   b = await Weather.AsyncMETAR("EGLL")
+   a = await Weather.AsyncTAF()
+   b = await Weather.AsyncTAF("EGLL")
    print(a)
    print(b)
 
