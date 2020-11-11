@@ -41,6 +41,17 @@ class Weather(commands.Cog):
       )
       await ctx.send(embed=embed)
 
+   @commands.command(aliases=["WX", "wx"])
+   async def report(self, ctx, apt="EIDW"):
+      """Returns airport METAR/TAF passed as arguement"""
+      embed = discord.Embed(
+         title=f"{apt.upper()} Weather Report",
+         colour=discord.Colour.blue()
+      )
+      embed.add_field(name="METAR", value=await Weather.AsyncMETAR(apt), inline=False)
+      embed.add_field(name="TAF", value=await Weather.AsyncTAF(apt), inline=False)
+      await ctx.send(embed=embed)
+
    @staticmethod
    def SyncMETAR(apt="EIDW"):
       """SYNC Web request airport METAR data"""
