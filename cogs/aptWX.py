@@ -21,6 +21,16 @@ class Weather(commands.Cog):
    async def WXping(self, ctx):
       await ctx.send("Pong aptWX")
 
+   @commands.command(aliases=["METAR"])
+   async def metar(self, ctx, apt="EIDW"):
+      """Returns METAR for airport passed as arguement"""
+      embed = discord.Embed(
+         title=f"{apt.upper()} METAR",
+         colour=discord.Colour.blue(),
+         description=await Weather.AsyncMETAR(apt)
+      )
+      await ctx.send(embed=embed)
+
    @staticmethod
    def SyncMETAR(apt="EIDW"):
       """SYNC Web request airport METAR data"""
