@@ -13,6 +13,7 @@ Last updated: --.--.2020, Python 3.8.5
 """
 
 client = commands.Bot(command_prefix="!")
+client.remove_command("help")
 
 @client.event
 async def on_ready():
@@ -22,6 +23,25 @@ async def on_ready():
 async def ping(ctx):
    """Returns latency between bot and server"""
    await ctx.send(f"Pong main. {round(client.latency * 1000)}ms")
+
+@client.group(invoke_without_command=True)
+async def help(ctx):
+   """Custom bot help command"""
+
+   embed = discord.Embed(
+         title="HomeBot Help Menu",
+         description="Bot command prefix: !",
+         colour=discord.Colour.blue()
+   )
+   embed.add_field(name="Commands Available:", value="Airport weather commands", inline=False)
+   embed.add_field(name="!metar [airport_code]", value="METAR report for a given airport", inline=True)
+   embed.add_field(name="!taf [airport_code]", value="TAF report for a given airport", inline=True)
+   embed.add_field(name="!wx [airport_code]", value="Full METAR/TAF report for a given airport", inline=True)
+   embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+   embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+   embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+   await ctx.send(embed=embed)
+
 
 @client.command()
 async def load(ctx, path):
