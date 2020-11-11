@@ -24,11 +24,17 @@ class Weather(commands.Cog):
    @commands.command(aliases=["METAR"])
    async def metar(self, ctx, apt="EIDW"):
       """Returns METAR for airport passed as arguement"""
+
+      # Note: urls all point to images from the working branch
       embed = discord.Embed(
-         title=f"{apt.upper()} METAR",
-         colour=discord.Colour.blue(),
-         description=await Weather.AsyncMETAR(apt)
+         title="Airport Weather",
+         description="Airport METAR data",
+         colour=discord.Colour.blue()
       )
+      embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=True)
+      embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/plane.png")
+      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
       await ctx.send(embed=embed)
 
    @commands.command(aliases=["TAF"])
