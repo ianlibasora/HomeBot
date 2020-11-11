@@ -12,6 +12,9 @@ class Weather(commands.Cog):
 
    Sync / Async
    Adapted for Discord
+
+   By Joseph Libasora
+   Last updated: 11.Nov.2020, Python 3.8.5
    """
 
    def __init__(self, client):
@@ -28,7 +31,7 @@ class Weather(commands.Cog):
       # Note: urls all point to images from the working branch
       embed = discord.Embed(
          title="Airport Weather",
-         description="Airport METAR data",
+         description="Airport METAR report",
          colour=discord.Colour.blue()
       )
       embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=False)
@@ -44,7 +47,7 @@ class Weather(commands.Cog):
       # Note: urls all point to images from the working branch
       embed = discord.Embed(
          title="Airport Weather",
-         description="Airport TAF data",
+         description="Airport TAF report",
          colour=discord.Colour.blue()
       )
       embed.add_field(name=f"{apt.upper()} TAF", value=await Weather.AsyncTAF(apt), inline=False)
@@ -56,12 +59,18 @@ class Weather(commands.Cog):
    @commands.command(aliases=["WX", "wx"])
    async def report(self, ctx, apt="EIDW"):
       """Returns airport METAR/TAF passed as arguement"""
+
+      # Note: urls all point to images from the working branch
       embed = discord.Embed(
-         title=f"{apt.upper()} Weather Report",
+         title="Airport Weather",
+         description="Airport full weather report",
          colour=discord.Colour.blue()
       )
-      embed.add_field(name="METAR", value=await Weather.AsyncMETAR(apt), inline=False)
-      embed.add_field(name="TAF", value=await Weather.AsyncTAF(apt), inline=False)
+      embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=False)
+      embed.add_field(name=f"{apt.upper()} TAF", value=await Weather.AsyncTAF(apt), inline=False)
+      embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/plane.png")
+      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
       await ctx.send(embed=embed)
 
    @staticmethod
