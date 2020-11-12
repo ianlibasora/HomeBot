@@ -27,14 +27,14 @@ pip install requests
 
 ### Notes
 ----
-- Image urls point to images stored working branch
+- Image urls point to images stored in the working branch
 - Bot tokens are stored and read from a ".token.txt" file
-
-By Joseph Libasora
-
-Last updated: 11.Nov.2020, Python 3.8.5
 
 ## Attribution
 - [METAR/TAF](https://www.aviationweather.gov/) API from Aviation Weather Center / National Weather Service, [(NOAA)](https://www.noaa.gov/) National Oceanic and Atmospheric Administration
 - [Plane](https://www.flaticon.com/free-icon/plane_129500) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
-- [Home](https://www.flaticon.com/free-icon/home_553416?term=home&page=1&position=45) icon by [Freepik]((https://www.flaticon.com/authors/freepik)) from [flaticon.com](https://www.flaticon.com/)
+- [Home](https://www.flaticon.com/free-icon/home_553416?term=home&page=1&position=45) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
+
+By Joseph Libasora
+
+Last updated: 12.Nov.2020, Python 3.8.5

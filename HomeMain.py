@@ -9,7 +9,7 @@ import sys
 Discord Home Bot in Python
 
 By Joseph Libasora
-Last updated: --.--.2020, Python 3.8.5
+Last updated: 12.Nov.2020, Python 3.8.5
 """
 
 client = commands.Bot(command_prefix="!")
