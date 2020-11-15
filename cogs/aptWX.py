@@ -14,7 +14,7 @@ class Weather(commands.Cog):
    Adapted for Discord
 
    By Joseph Libasora
-   Last updated: 11.Nov.2020, Python 3.8.5
+   Last updated: 15.Nov.2020, Python 3.8.5
    """
 
    def __init__(self, client):
@@ -22,7 +22,7 @@ class Weather(commands.Cog):
 
    @commands.command()
    async def WXping(self, ctx):
-      await ctx.send("Pong aptWX")
+      await ctx.send("Pong aptWX.py")
 
    @commands.command(aliases=["METAR"])
    async def metar(self, ctx, apt="EIDW"):

@@ -20,10 +20,11 @@ class Timetable(commands.Cog):
 
    @commands.command()
    async def Tping(self, ctx):
-      await ctx.send("Pong times")
+      await ctx.send("Pong times.py")
 
    @staticmethod
    async def GetTable():
+      """Read timetable file"""
       try:
          with open("cogs/.times.json", "r") as fd:
             return json.loads(fd.read())
