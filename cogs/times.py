@@ -22,11 +22,30 @@ class Timetable(commands.Cog):
    async def Tping(self, ctx):
       await ctx.send("Pong times")
 
+   @staticmethod
+   async def GetTable():
+      try:
+         with open("cogs/.times.json", "r") as fd:
+            return json.loads(fd.read())
+
+      except FileNotFoundError:
+         # Fail condition: False
+         return False
+
 def setup(client):
    client.add_cog(Timetable(client))
 
 def main():
+   """Local testing main()"""
    pass
 
+async def amain():
+   """Local testing amain()"""
+   # table = Timetable()
+   code = await Timetable.GetTable()
+   print(code)
+
 if __name__ == "__main__":
-   main()
+   # main()
+   import asyncio
+   asyncio.run(amain())
