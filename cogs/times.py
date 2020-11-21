@@ -22,6 +22,14 @@ class Timetable(commands.Cog):
    async def Tping(self, ctx):
       await ctx.send("Pong times.py")
 
+   @commands.command(aliases=["Timetable", "timetable", "time", "Time"])
+   async def ttable(self, ctx):
+      data = await Timetable.GetTable()
+      if data is not None:
+         await ctx.send(data)
+      else:
+         await ctx.send("No timetable found")
+
    @staticmethod
    async def GetTable():
       """Read timetable file"""
@@ -30,8 +38,8 @@ class Timetable(commands.Cog):
             return json.loads(fd.read())
 
       except FileNotFoundError:
-         # Fail condition: False
-         return False
+         # Fail condition: None
+         return None
 
 def setup(client):
    client.add_cog(Timetable(client))
