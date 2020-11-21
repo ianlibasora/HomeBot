@@ -23,10 +23,11 @@ class Timetable(commands.Cog):
       await ctx.send("Pong times.py")
 
    @commands.command(aliases=["Timetable", "timetable", "time", "Time"])
-   async def ttable(self, ctx):
+   async def ttable(self, ctx, i_day=None):
       data = await Timetable.GetTable()
+      day = await Timetable.GetDay(i_day)
       if data is not None:
-         await ctx.send(data)
+         await ctx.send(data[day])
       else:
          await ctx.send("No timetable found")
 
