@@ -10,24 +10,19 @@ Home utility bot in discord using Python
 
 All modules can be installed using pip.
 
-Example:
-```
-pip install requests
-```
-
 ## Features
 1. Airport weather data requests
    - Request airport METAR/TAF reports
-2. Reminder Script
-   - Planned, --- WIP ---
-3. Timetable Script
+2. Timetable Script
+   - Request class timetables
+3. Reminder Script
    - Planned, --- WIP ---
 4. Dublin RTPI Integration
    - Planned, --- WIP ---
 
 ### Notes
 ----
-- Image urls point to images stored in the working branch
+- Image urls point to images stored in the github working branch
 - Bot tokens are stored and read from a ".token.txt" file
 
 ## Attribution
@@ -37,4 +32,4 @@ pip install requests
 
 By Joseph Libasora
 
-Last updated: 12.Nov.2020, Python 3.8.5
+Last updated: 23.Nov.2020, Python 3.8.5
