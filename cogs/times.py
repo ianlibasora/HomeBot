@@ -13,7 +13,7 @@ class Timetable(commands.Cog):
    Adapted for discord
    
    By Joseph Libasora
-   Last updated: 21.Nov.2020
+   Last updated: 23.Nov.2020
    """
    def __init__(self, client):
       self.client = client
@@ -24,10 +24,23 @@ class Timetable(commands.Cog):
 
    @commands.command(aliases=["Timetable", "timetable", "time", "Time"])
    async def ttable(self, ctx, i_day=None):
+      """Request timetable"""
       data = await Timetable.GetTable()
       day = await Timetable.GetDay(i_day)
+
       if data is not None:
-         await ctx.send(data[day])
+         embed = discord.Embed(
+            title="Class Timetable",
+            description="Today's class timetable",
+            colour=discord.Colour.blue()
+         )
+         for line in data[day]:
+            code, name, room, srt, end = line.strip().split(",")
+            embed.add_field(name=f"{code} - {name}", value=f"{srt} | {end} | {room}", inline=False)
+         
+         embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+         embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+         await ctx.send(embed=embed)
       else:
          await ctx.send("No timetable found")
 
@@ -44,7 +57,9 @@ class Timetable(commands.Cog):
 
    @staticmethod
    async def GetDay(i_day=None):
-      """Get the current or requested day"""
+      """
+      Get the current or requested day. Default=Current day
+      """
       week = {
          "mon": "monday", "monday": "monday",
          "tues": "tuesday", "tue": "tuesday", "tuesday": "tuesday",
