@@ -48,7 +48,7 @@ class F1(commands.Cog):
             code = "MSC"
          embed.add_field(name=f"#{driver[0]} {code}", value=f"> {driver[1]}\n> {driver[3]}\n> {driver[4]}", inline=True)
       embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
-      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
       await ctx.send(embed=embed)
 
    @commands.command(aliases=["WCC"])
@@ -65,7 +65,7 @@ class F1(commands.Cog):
          code = self.teams[team[1]]
          embed.add_field(name=f"#{team[0]} {code}", value=f"> {team[1]}\n> {team[2]}", inline=True)
       embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
-      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
       await ctx.send(embed=embed)
 
    @staticmethod

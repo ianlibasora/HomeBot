@@ -39,7 +39,7 @@ class Timetable(commands.Cog):
             embed.add_field(name=f"{code} - {name}", value=f"{srt} | {end} | {room}", inline=False)
          
          embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
-         embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+         embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
          await ctx.send(embed=embed)
       else:
          await ctx.send("No timetable found")

@@ -45,9 +45,9 @@ async def help(ctx):
    embed.add_field(name="!wdc", value="Request F1 WDC Standings", inline=True)
    embed.add_field(name="!wcc", value="Request F1 WCC Standings", inline=True)
 
-   embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+   embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
    embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
-   embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+   embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
    await ctx.send(embed=embed)
 
 
