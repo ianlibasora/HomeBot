@@ -20,7 +20,6 @@ All modules can be installed using pip.
 
 ### Notes
 ----
-- Image urls point to images stored in the github working branch
 - Bot tokens are stored and read from a ".token.txt" file
 
 ## Attribution
