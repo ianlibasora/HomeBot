@@ -12,6 +12,18 @@ class F1(commands.Cog):
    By Joseph Libasora
    Last updated: 07.Jul.2021, Python 3.8.5
    """
+   teams = {
+      "Mercedes": "MER",
+      "Red Bull": "RBR",
+      "McLaren": "MCL",
+      "Ferrari": "FER",
+      "AlphaTauri": "APT",
+      "Aston Martin": "ASM",
+      "Alpine": "ALP",
+      "Alfa Romeo": "AFR",
+      "Williams": "WIL",
+      "Haas": "HAS"
+   }
 
    def __init__(self, client):
       self.client = client
@@ -19,6 +31,25 @@ class F1(commands.Cog):
    @commands.command()
    async def F1ping(self, ctx):
       await ctx.send("Pong f1.py")
+
+   @commands.command(aliases=["WDC"])
+   async def wdc(self, ctx):
+      """Returns F1 World Driver's Championship Standings"""
+
+      wdc = await F1.getWDC()
+      embed = discord.Embed(
+         title="F1 World Driver's Championship Standings",
+         colour=discord.Colour.red()
+      )
+
+      for driver in wdc:
+         code = driver[1].split()[1][:3].upper()
+         if code == "SCH":
+            code = "MSC"
+         embed.add_field(name=f"#{driver[0]} {code}", value=f"> {driver[1]}\n> {driver[3]}\n> {driver[4]}", inline=True)
+      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+      await ctx.send(embed=embed)
 
    @staticmethod
    async def getWDC():
