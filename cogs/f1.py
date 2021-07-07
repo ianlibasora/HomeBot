@@ -51,6 +51,23 @@ class F1(commands.Cog):
       embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
       await ctx.send(embed=embed)
 
+   @commands.command(aliases=["WCC"])
+   async def wcc(self, ctx):
+      """Returns F1 World Constructor's Championship Standings"""
+
+      wcc = await F1.getWCC()
+      embed = discord.Embed(
+         title="F1 World Constructor's Championship Standings",
+         colour=discord.Colour.red()
+      )
+
+      for team in wcc:
+         code = self.teams[team[1]]
+         embed.add_field(name=f"#{team[0]} {code}", value=f"> {team[1]}\n> {team[2]}", inline=True)
+      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
+      await ctx.send(embed=embed)
+
    @staticmethod
    async def getWDC():
       """Async web request F1 World Driver's Championship standings"""
