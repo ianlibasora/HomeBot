@@ -9,7 +9,7 @@ import sys
 Discord Home Bot in Python
 
 By Joseph Libasora
-Last updated: 23.Nov.2020, Python 3.8.5
+Last updated: 07.Jul.2021, Python 3.8.5
 """
 
 client = commands.Bot(command_prefix="!")
@@ -40,6 +40,10 @@ async def help(ctx):
 
    # times.py
    embed.add_field(name="!time [day]", value="Request class timetable", inline=False)
+
+   # f1.py
+   embed.add_field(name="!wdc", value="Request F1 WDC Standings", inline=True)
+   embed.add_field(name="!wcc", value="Request F1 WCC Standings", inline=True)
 
    embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/home.png")
    embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
