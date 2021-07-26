@@ -70,6 +70,15 @@ async def reload(ctx, path):
    client.load_extension(f"cogs.{path}")
    await ctx.send(f"Cog: {path} reloaded")
 
+@client.command()
+async def freload(ctx):
+   """Reload all cogs"""
+   for file_n in os.listdir("./cogs"):
+      if file_n.endswith(".py"):
+         client.unload_extension(f"cogs.{file_n[:-3]}")
+         client.load_extension(f"cogs.{file_n[:-3]}")
+   await ctx.send("Reloaded all cogs")
+
 for file_n in os.listdir("./cogs"):
    if file_n.endswith(".py"):
       client.load_extension(f"cogs.{file_n[:-3]}")
