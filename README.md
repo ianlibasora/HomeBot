@@ -4,7 +4,6 @@ Home utility bot in discord using Python
 
 ## Dependencies
 - [discord.py](https://pypi.org/project/discord.py/)
-- [requests](https://pypi.org/project/requests/)
 - [aiohttp](https://pypi.org/project/aiohttp/)
 - [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
 
@@ -30,4 +29,4 @@ All modules can be installed using pip.
 
 By Joseph Libasora
 
-Last updated: 07.Jul.2021, Python 3.8.5
+Last updated: 26.Jul.2021, Python 3.8.10

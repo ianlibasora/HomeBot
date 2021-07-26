@@ -7,10 +7,10 @@ import aiohttp
 
 class F1(commands.Cog):
    """
-   F1 Data Library
+   F1 Data Standings Library
 
    By Joseph Libasora
-   Last updated: 07.Jul.2021, Python 3.8.5
+   Last updated: 26.Jul.2021, Python 3.8.10
    """
    teams = {
       "Mercedes": "MER",
