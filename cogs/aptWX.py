@@ -35,7 +35,7 @@ class Weather(commands.Cog):
       )
       embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=False)
       embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
-      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from aviationweather.gov")
       embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
       await ctx.send(embed=embed)
 
@@ -51,7 +51,7 @@ class Weather(commands.Cog):
       )
       embed.add_field(name=f"{apt.upper()} TAF", value=await Weather.AsyncTAF(apt), inline=False)
       embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
-      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from aviationweather.gov")
       embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
       await ctx.send(embed=embed)
 
@@ -67,7 +67,7 @@ class Weather(commands.Cog):
       embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=False)
       embed.add_field(name=f"{apt.upper()} TAF", value=await Weather.AsyncTAF(apt), inline=False)
       embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
-      embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from aviationweather.gov")
       embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
       await ctx.send(embed=embed)
 
