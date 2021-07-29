@@ -13,7 +13,7 @@ class Timetable(commands.Cog):
    Adapted for discord
    
    By Joseph Libasora
-   Last updated: 23.Nov.2020
+   Last updated: 29.Jul.2021
    """
    def __init__(self, client):
       self.client = client

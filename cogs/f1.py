@@ -10,7 +10,7 @@ class F1(commands.Cog):
    F1 Data Standings Library
 
    By Joseph Libasora
-   Last updated: 26.Jul.2021, Python 3.8.10
+   Last updated: 26.Jul.2021
    """
    teams = {
       "Mercedes": "MER",

@@ -29,4 +29,4 @@ All modules can be installed using pip.
 
 By Joseph Libasora
 
-Last updated: 26.Jul.2021, Python 3.8.10
+Last updated: 29.Jul.2021, Python 3.8.10

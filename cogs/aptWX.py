@@ -11,7 +11,7 @@ class Weather(commands.Cog):
    Adapted for Discord
 
    By Joseph Libasora
-   Last updated: 26.Jul.2021, Python 3.8.10
+   Last updated: 26.Jul.2021
    """
 
    def __init__(self, client):
