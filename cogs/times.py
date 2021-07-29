@@ -31,12 +31,14 @@ class Timetable(commands.Cog):
       if data is not None:
          embed = discord.Embed(
             title="Class Timetable",
-            description="Today's class timetable",
             colour=discord.Colour.blue()
          )
-         for line in data[day]:
-            code, name, room, srt, end = line.strip().split(",")
-            embed.add_field(name=f"{code} - {name}", value=f"{srt} | {end} | {room}", inline=False)
+         if len(data[day]) == 0:
+            embed.add_field(name="No Scheduled Classes", value="There are no classes today", inline=False)
+         else:
+            for line in data[day]:
+               code, name, room, srt, end = line.strip().split(",")
+               embed.add_field(name=f"{code} - {name}", value=f"{srt} | {end} | {room}", inline=False)
          
          embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
          embed.set_author(name="HomeBot", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
