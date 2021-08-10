@@ -9,7 +9,7 @@ import sys
 Discord Home Bot in Python
 
 By Joseph Libasora
-Last updated: 26.Jul.2021
+Last updated: 10.Aug.2021
 """
 
 client = commands.Bot(command_prefix="!")
@@ -29,9 +29,9 @@ async def help(ctx):
    """Custom bot help command"""
 
    embed = discord.Embed(
-         title="HomeBot Help Menu",
-         description="Bot command prefix: !",
-         colour=discord.Colour.blue()
+      title="HomeBot Help Menu",
+      description="Bot command prefix: !",
+      colour=discord.Colour.blue()
    )
    # aptWX.py
    embed.add_field(name="!metar [airport_code]", value="METAR report for a given airport", inline=True)
@@ -39,7 +39,10 @@ async def help(ctx):
    embed.add_field(name="!wx [airport_code]", value="Full METAR/TAF report for a given airport", inline=True)
 
    # times.py
-   embed.add_field(name="!time [day]", value="Request class timetable", inline=False)
+   embed.add_field(name="!time [day]", value="Request class timetable", inline=True)
+   
+   # covid19.py
+   embed.add_field(name="!covid", value="Request Ireland COVID-19 Data", inline=True)
 
    # f1.py
    embed.add_field(name="!wdc", value="Request F1 WDC Standings", inline=True)
