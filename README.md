@@ -16,6 +16,8 @@ All modules can be installed using pip.
    - Request class timetables
 3. F1 Standings
    - Request World Driver's / Constructor's Standings
+4. Ireland COVID-19 Data
+   - Request Ireland new COVID-19 Case data
 
 ### Notes
 ----
