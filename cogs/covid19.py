@@ -20,6 +20,22 @@ class Covid19(commands.Cog):
    async def c19ping(self, ctx):
       await ctx.send("Pong covid19.py")
 
+   @commands.command(aliases=["COVID", "covid19", "COVID19", "covid-19","COVID-19", "c19", "C19", "corona", "CORONA"])
+   async def covid(self, ctx):
+      """Returns Ireland New COVID-19 Cases Data"""
+
+      data = await Covid19.getCovidData()
+      embed = discord.Embed(
+         colour=discord.Colour.gold()
+      )
+
+      embed.add_field(name="New COVID-19 Cases", value=f"> {data['ConfirmedCovidCases']}", inline=True)
+      embed.add_field(name="New COVID-19 Deaths", value=f"> {data['ConfirmedCovidDeaths']}", inline=True)
+
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from Ireland COVID-19 Data Hub")
+      embed.set_author(name="Ireland COVID-19 Data", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/covid-19.png")
+      await ctx.send(embed=embed)
+
    @staticmethod
    async def getCovidData():
       """Async data request Ireland Covid-19 data"""
