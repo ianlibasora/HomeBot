@@ -33,7 +33,7 @@ class Covid19(commands.Cog):
       embed.add_field(name="New COVID-19 Deaths", value=f"> {data['ConfirmedCovidDeaths']}", inline=True)
 
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from Ireland COVID-19 Data Hub")
-      embed.set_author(name="Ireland COVID-19 Data", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/covid-19.png")
+      embed.set_author(name="Ireland COVID-19 Data", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/c19.png")
       await ctx.send(embed=embed)
 
    @staticmethod
