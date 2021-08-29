@@ -106,6 +106,20 @@ class F1(commands.Cog):
                return "Warning, web error occured. Code: {web_resp.status}"
       return "Warning, request timeout"
 
+   @staticmethod
+   async def getSchedule():
+      """Async web request current F1 schedule"""
+
+      url = "http://ergast.com/api/f1/current.json"
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as sesh:
+         async with sesh.get(url) as web_resp:
+            if web_resp.status == 200:
+               dataJSON = await web_resp.json()
+               return dataJSON["MRData"]["RaceTable"]["Races"]
+            return "Warning, web error occured. Code: {web_resp.status}"
+      return "Warning, request timeout"
+
 
 def setup(client):
    client.add_cog(F1(client))
@@ -117,6 +131,7 @@ async def asyncTest():
 
    # print(await F1.getWDC())
    # print(await F1.getWCC())
+   # print(await F1.getSchedule())
 
 if __name__ == "__main__":
    import asyncio
