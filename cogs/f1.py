@@ -3,13 +3,12 @@
 from os import stat
 import discord
 from discord.ext import commands
-from bs4 import BeautifulSoup
 import aiohttp
 import datetime
 
 class F1(commands.Cog):
    """
-   F1 Data Standings Library
+   F1 Data Library
 
    By Joseph Libasora
    Last updated: 29.Aug.2021
@@ -168,9 +167,6 @@ def setup(client):
 async def asyncTest():
    """Local async testing"""
    print("testing async local functions")
-
-   # print(await F1.getWDC())
-   # print(await F1.getWCC())
    # print(await F1.getSchedule())
    # print(await F1.getNewWDC())
    # print(await F1.getNewWCC())
