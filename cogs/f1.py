@@ -53,7 +53,7 @@ class F1(commands.Cog):
                \n> {driver['points']}", 
             inline=True
          )
-      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from skysports.com/f1/standings")
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
       embed.set_author(name="F1 World Drivers Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
       await ctx.send(embed=embed)
 
