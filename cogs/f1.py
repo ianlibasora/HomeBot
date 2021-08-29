@@ -19,12 +19,12 @@ class F1(commands.Cog):
       "Red Bull": "RBR",
       "McLaren": "MCL",
       "Ferrari": "FER",
-      "AlphaTauri": "APT",
-      "Aston Martin": "ASM",
-      "Alpine": "ALP",
+      "AlphaTauri": "ATH",
+      "Aston Martin": "AMR",
+      "Alpine F1 Team": "ALP",
       "Alfa Romeo": "AFR",
       "Williams": "WIL",
-      "Haas": "HAS"
+      "Haas F1 Team": "HAS"
    }
 
    def __init__(self, client):
@@ -62,15 +62,19 @@ class F1(commands.Cog):
    async def wcc(self, ctx):
       """Returns F1 World Constructors Championship Standings"""
 
-      wcc = await F1.getWCC()
+      wcc = await F1.getNewWCC()
       embed = discord.Embed(
          colour=discord.Colour.red()
       )
 
       for team in wcc:
-         code = self.teams[team[1]]
-         embed.add_field(name=f"#{team[0]} {code}", value=f"> {team[1]}\n> {team[2]}", inline=True)
-      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from skysports.com/f1/standings")
+         code = self.teams[team['Constructor']['name']]
+         embed.add_field(
+            name=f"#{team['position']} {code}", 
+            value=f"> {team['Constructor']['name']}\n> {team['points']}", 
+            inline=True
+         )
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
       embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
       await ctx.send(embed=embed)
 
