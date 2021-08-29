@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 from bs4 import BeautifulSoup
 import aiohttp
+import datetime
 
 class F1(commands.Cog):
    """
@@ -74,21 +75,31 @@ class F1(commands.Cog):
       embed = discord.Embed(
          colour=discord.Colour.red()
       )
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
 
       if type is None:
-         pass
+         # Return next F1 race
+         embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+         today = datetime.date.today()
+
+         for round in schedule:
+            if today <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
+               title = f"Round {round['round']} {round['raceName']}"
+               dateTime = f"{round['date']} {round['time'].replace('Z', 'UTC')}"
+               msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
+               embed.add_field(name=title, value=msg)
+               return await ctx.send(embed=embed)
+         embed.add_field(name="No New F1 Races", value="No new races for the F1 season")
       else:
          # Return full schedule
+         embed.set_author(name="F1 Schedule (Full)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+
          for round in schedule:
             title = f"Round {round['round']} {round['raceName']}"
             dateTime = f"{round['date']} {round['time'].replace('Z', 'UTC')}"
             msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
             embed.add_field(name=title, value=msg)
-
-      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
-      embed.set_author(name="F1 Schedule", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
       await ctx.send(embed=embed)
-
 
    @staticmethod
    async def getWDC():
