@@ -9,7 +9,7 @@ import sys
 Discord Home Bot in Python
 
 By Joseph Libasora
-Last updated: 10.Aug.2021
+Last updated: 29.Aug.2021
 """
 
 client = commands.Bot(command_prefix="!")
@@ -19,10 +19,12 @@ client.remove_command("help")
 async def on_ready():
    """Reports when main bot is ready"""
 
+
 @client.command()
 async def ping(ctx):
    """Returns latency between bot and server"""
    await ctx.send(f"Pong main. {round(client.latency * 1000)}ms")
+
 
 @client.group(invoke_without_command=True)
 async def help(ctx):
@@ -45,6 +47,7 @@ async def help(ctx):
    embed.add_field(name="!covid", value="Request Ireland COVID-19 Data", inline=True)
 
    # f1.py
+   embed.add_field(name="!f1 [full]", value="Request F1 (full or next) Schedule", inline=True)
    embed.add_field(name="!wdc", value="Request F1 WDC Standings", inline=True)
    embed.add_field(name="!wcc", value="Request F1 WCC Standings", inline=True)
 
@@ -60,11 +63,13 @@ async def load(ctx, path):
    client.load_extension(f"cogs.{path}")
    await ctx.send(f"Cog: {path} loaded")
 
+
 @client.command()
 async def unload(ctx, path):
    """Unloads cogs"""
    client.unload_extension(f"cogs.{path}")
    await ctx.send(f"Cog: {path} unloaded")
+
 
 @client.command()
 async def reload(ctx, path):
@@ -72,6 +77,7 @@ async def reload(ctx, path):
    client.unload_extension(f"cogs.{path}")
    client.load_extension(f"cogs.{path}")
    await ctx.send(f"Cog: {path} reloaded")
+
 
 @client.command()
 async def freload(ctx):
@@ -85,6 +91,7 @@ async def freload(ctx):
 for file_n in os.listdir("./cogs"):
    if file_n.endswith(".py"):
       client.load_extension(f"cogs.{file_n[:-3]}")
+
 
 def main():
    """
@@ -100,6 +107,7 @@ def main():
          token = fd.read().strip()
    except FileNotFoundError:
       sys.exit("Warning, Error occured. No '.token.txt' file found!")
+
 
 if __name__ == "__main__":
    main()
