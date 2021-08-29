@@ -12,7 +12,7 @@ class F1(commands.Cog):
    F1 Data Standings Library
 
    By Joseph Libasora
-   Last updated: 26.Jul.2021
+   Last updated: 29.Aug.2021
    """
    teams = {
       "Mercedes": "MER",
@@ -115,48 +115,6 @@ class F1(commands.Cog):
 
 
    @staticmethod
-   async def getWDC():
-      """Async web request F1 World Drivers Championship standings"""
-
-      url = "https://www.skysports.com/f1/standings"
-      timeout = aiohttp.ClientTimeout(total=10)
-      async with aiohttp.ClientSession(timeout=timeout) as sesh:
-         async with sesh.get(url) as web_resp:
-            if web_resp.status == 200:
-               web = await web_resp.text()
-               soup = BeautifulSoup(web, "html.parser")
-               wdc = []
-               
-               for driver in soup.find_all("table")[0].find_all("tr")[1:]:
-                  wdc.append([driverdata.text.strip() for driverdata in driver.find_all("td")])
-               return wdc
-            else:
-               return "Warning, web error occured. Code: {web_resp.status}"
-      return "Warning, request timeout"
-
-
-   @staticmethod
-   async def getWCC():
-      """Async web request F1 World Constructors Championship standings"""
-
-      url = "https://www.skysports.com/f1/standings"
-      timeout = aiohttp.ClientTimeout(total=10)
-      async with aiohttp.ClientSession(timeout=timeout) as sesh:
-         async with sesh.get(url) as web_resp:
-            if web_resp.status == 200:
-               web = await web_resp.text()
-               soup = BeautifulSoup(web, "html.parser")
-               wcc = []
-               
-               for team in soup.find_all("table")[1].find_all("tr")[1:]:
-                  wcc.append([teamdata.text.strip() for teamdata in team.find_all("td")])
-               return wcc
-            else:
-               return "Warning, web error occured. Code: {web_resp.status}"
-      return "Warning, request timeout"
-
-
-   @staticmethod
    async def getSchedule():
       """Async web request current F1 schedule"""
 
@@ -215,7 +173,7 @@ async def asyncTest():
    # print(await F1.getWCC())
    # print(await F1.getSchedule())
    # print(await F1.getNewWDC())
-   print(await F1.getNewWCC())
+   # print(await F1.getNewWCC())
 
 if __name__ == "__main__":
    import asyncio
