@@ -30,27 +30,33 @@ class F1(commands.Cog):
    def __init__(self, client):
       self.client = client
 
+
    @commands.command()
    async def F1ping(self, ctx):
       await ctx.send("Pong f1.py")
+
 
    @commands.command(aliases=["WDC"])
    async def wdc(self, ctx):
       """Returns F1 World Drivers Championship Standings"""
 
-      wdc = await F1.getWDC()
+      wdc = await F1.getNewWDC()
       embed = discord.Embed(
          colour=discord.Colour.red()
       )
 
       for driver in wdc:
-         code = driver[1].split()[1][:3].upper()
-         if code == "SCH":
-            code = "MSC"
-         embed.add_field(name=f"#{driver[0]} {code}", value=f"> {driver[1]}\n> {driver[3]}\n> {driver[4]}", inline=True)
+         embed.add_field(
+            name=f"#{driver['position']} {driver['Driver']['code']}", 
+            value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\
+               \n> {driver['Constructors'][0]['name']}\
+               \n> {driver['points']}", 
+            inline=True
+         )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from skysports.com/f1/standings")
       embed.set_author(name="F1 World Drivers Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
       await ctx.send(embed=embed)
+
 
    @commands.command(aliases=["WCC"])
    async def wcc(self, ctx):
@@ -67,6 +73,7 @@ class F1(commands.Cog):
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from skysports.com/f1/standings")
       embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
       await ctx.send(embed=embed)
+
 
    @commands.command(aliases=["F1"])
    async def f1(self, ctx, type=None):
@@ -102,6 +109,7 @@ class F1(commands.Cog):
             embed.add_field(name=title, value=msg)
       await ctx.send(embed=embed)
 
+
    @staticmethod
    async def getWDC():
       """Async web request F1 World Drivers Championship standings"""
@@ -121,6 +129,7 @@ class F1(commands.Cog):
             else:
                return "Warning, web error occured. Code: {web_resp.status}"
       return "Warning, request timeout"
+
 
    @staticmethod
    async def getWCC():
@@ -142,6 +151,7 @@ class F1(commands.Cog):
                return "Warning, web error occured. Code: {web_resp.status}"
       return "Warning, request timeout"
 
+
    @staticmethod
    async def getSchedule():
       """Async web request current F1 schedule"""
@@ -155,6 +165,7 @@ class F1(commands.Cog):
                return dataJSON["MRData"]["RaceTable"]["Races"]
             return "Warning, web error occured. Code: {web_resp.status}"
       return "Warning, request timeout"
+
 
    @staticmethod
    async def getNewWDC():
@@ -183,7 +194,7 @@ async def asyncTest():
    # print(await F1.getWDC())
    # print(await F1.getWCC())
    # print(await F1.getSchedule())
-   print(await F1.getNewWDC())
+   # print(await F1.getNewWDC())
 
 if __name__ == "__main__":
    import asyncio
