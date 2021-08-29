@@ -183,6 +183,22 @@ class F1(commands.Cog):
       return "Warning, request timeout"
 
 
+   @staticmethod
+   async def getNewWCC():
+      """Async web request F1 World Constructors Championship standings"""
+
+      url = "http://ergast.com/api/f1/current/constructorStandings.json"
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as sesh:
+         async with sesh.get(url) as web_resp:
+            if web_resp.status == 200:
+               dataJSON = await web_resp.json()
+               return dataJSON["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"]
+            else:
+               return "Warning, web error occured. Code: {web_resp.status}"
+      return "Warning, request timeout"   
+
+
 def setup(client):
    client.add_cog(F1(client))
 
@@ -195,6 +211,7 @@ async def asyncTest():
    # print(await F1.getWCC())
    # print(await F1.getSchedule())
    # print(await F1.getNewWDC())
+   print(await F1.getNewWCC())
 
 if __name__ == "__main__":
    import asyncio
