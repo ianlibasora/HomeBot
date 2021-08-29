@@ -66,6 +66,30 @@ class F1(commands.Cog):
       embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
       await ctx.send(embed=embed)
 
+   @commands.command(aliases=["F1"])
+   async def f1(self, ctx, type=None):
+      """Returns F1 Schedule"""
+
+      schedule = await F1.getSchedule()
+      embed = discord.Embed(
+         colour=discord.Colour.red()
+      )
+
+      if type is None:
+         pass
+      else:
+         # Return full schedule
+         for round in schedule:
+            title = f"Round {round['round']} {round['raceName']}"
+            dateTime = f"{round['date']} {round['time'].replace('Z', 'UTC')}"
+            msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
+            embed.add_field(name=title, value=msg)
+
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
+      embed.set_author(name="F1 Schedule", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+      await ctx.send(embed=embed)
+
+
    @staticmethod
    async def getWDC():
       """Async web request F1 World Drivers Championship standings"""
