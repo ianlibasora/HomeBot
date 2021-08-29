@@ -95,7 +95,7 @@ class F1(commands.Cog):
          for round in schedule:
             if today <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
                title = f"Round {round['round']} {round['raceName']}"
-               dateTime = f"{round['date']} {round['time'].replace('Z', 'UTC')}"
+               dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
                msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
                embed.add_field(name=title, value=msg)
                return await ctx.send(embed=embed)
@@ -106,7 +106,7 @@ class F1(commands.Cog):
 
          for round in schedule:
             title = f"Round {round['round']} {round['raceName']}"
-            dateTime = f"{round['date']} {round['time'].replace('Z', 'UTC')}"
+            dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
             msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
             embed.add_field(name=title, value=msg)
       await ctx.send(embed=embed)
