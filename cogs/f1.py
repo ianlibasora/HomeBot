@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from os import stat
 import discord
 from discord.ext import commands
 from bs4 import BeautifulSoup
@@ -155,6 +156,21 @@ class F1(commands.Cog):
             return "Warning, web error occured. Code: {web_resp.status}"
       return "Warning, request timeout"
 
+   @staticmethod
+   async def getNewWDC():
+      """Async web request F1 World Drivers Championship standings"""
+
+      url = "http://ergast.com/api/f1/current/driverStandings.json"
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as sesh:
+         async with sesh.get(url) as web_resp:
+            if web_resp.status == 200:
+               dataJSON = await web_resp.json()
+               return dataJSON["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"]
+            else:
+               return "Warning, web error occured. Code: {web_resp.status}"
+      return "Warning, request timeout"
+
 
 def setup(client):
    client.add_cog(F1(client))
@@ -167,6 +183,7 @@ async def asyncTest():
    # print(await F1.getWDC())
    # print(await F1.getWCC())
    # print(await F1.getSchedule())
+   print(await F1.getNewWDC())
 
 if __name__ == "__main__":
    import asyncio
