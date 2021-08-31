@@ -11,7 +11,7 @@ class Weather(commands.Cog):
    Adapted for Discord
 
    By Joseph Libasora
-   Last updated: 26.Jul.2021
+   Last updated: 31.Aug.2021
    """
 
    def __init__(self, client):
@@ -28,7 +28,7 @@ class Weather(commands.Cog):
       embed = discord.Embed(
          colour=discord.Colour.blue()
       )
-      embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=False)
+      embed.add_field(name=f"{apt.upper()} METAR", value=f"> {await Weather.AsyncMETAR(apt)}", inline=False)
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from aviationweather.gov")
       embed.set_author(name="Airport Weather", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
       await ctx.send(embed=embed)
@@ -41,7 +41,7 @@ class Weather(commands.Cog):
       embed = discord.Embed(
          colour=discord.Colour.blue()
       )
-      embed.add_field(name=f"{apt.upper()} TAF", value=await Weather.AsyncTAF(apt), inline=False)
+      embed.add_field(name=f"{apt.upper()} TAF", value=f"> {await Weather.AsyncTAF(apt)}", inline=False)
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from aviationweather.gov")
       embed.set_author(name="Airport Weather", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
       await ctx.send(embed=embed)
@@ -53,8 +53,8 @@ class Weather(commands.Cog):
       embed = discord.Embed(
          colour=discord.Colour.blue()
       )
-      embed.add_field(name=f"{apt.upper()} METAR", value=await Weather.AsyncMETAR(apt), inline=False)
-      embed.add_field(name=f"{apt.upper()} TAF", value=await Weather.AsyncTAF(apt), inline=False)
+      embed.add_field(name=f"{apt.upper()} METAR", value=f"> {await Weather.AsyncMETAR(apt)}", inline=False)
+      embed.add_field(name=f"{apt.upper()} TAF", value=f"> {await Weather.AsyncTAF(apt)}", inline=False)
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from aviationweather.gov")
       embed.set_author(name="Airport Weather", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
       await ctx.send(embed=embed)

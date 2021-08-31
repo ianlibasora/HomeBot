@@ -13,7 +13,7 @@ class Timetable(commands.Cog):
    Adapted for discord
    
    By Joseph Libasora
-   Last updated: 01.Aug.2021
+   Last updated: 31.Aug.2021
    """
    def __init__(self, client):
       self.client = client
@@ -33,11 +33,11 @@ class Timetable(commands.Cog):
             colour=discord.Colour.blue()
          )
          if len(data[day]) == 0:
-            embed.add_field(name="No Scheduled Classes", value="There are no classes today", inline=False)
+            embed.add_field(name="No Scheduled Classes", value="> There are no classes today", inline=False)
          else:
             for line in data[day]:
                code, name, room, srt, end = line.strip().split(",")
-               embed.add_field(name=f"{code} - {name}", value=f"{srt} | {end} | {room}", inline=False)
+               embed.add_field(name=f"{code} - {name}", value=f"> {srt} | {end} | {room}", inline=False)
          
          embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author}")
          embed.set_author(name="Class Timetable", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/schedule.png")
