@@ -10,7 +10,7 @@ class F1(commands.Cog):
    F1 Data Library
 
    By Joseph Libasora
-   Last updated: 29.Aug.2021
+   Last updated: 31.Aug.2021
    """
    teams = {
       "Mercedes": "MER",
@@ -46,9 +46,7 @@ class F1(commands.Cog):
       for driver in wdc:
          embed.add_field(
             name=f"#{driver['position']} {driver['Driver']['code']}", 
-            value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\
-               \n> {driver['Constructors'][0]['name']}\
-               \n> {driver['points']}", 
+            value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\n> {driver['Constructors'][0]['name']}\n> {driver['points']}", 
             inline=True
          )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
