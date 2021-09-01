@@ -9,7 +9,7 @@ import sys
 Discord Home Bot in Python
 
 By Joseph Libasora
-Last updated: 31.Aug.2021
+Last updated: 01.Sept.2021
 """
 
 client = commands.Bot(command_prefix="!")
@@ -47,7 +47,8 @@ async def help(ctx):
    embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
 
    # f1.py
-   embed.add_field(name="!f1 [full]", value="> Request F1 (full or next) Schedule", inline=True)
+   embed.add_field(name="!f1", value="> Request F1 (Full) Schedule", inline=True)
+   embed.add_field(name="!f1.next", value="> Request F1 (Next) Schedule", inline=True)
    embed.add_field(name="!wdc", value="> Request F1 WDC Standings", inline=True)
    embed.add_field(name="!wcc", value="> Request F1 WCC Standings", inline=True)
 
