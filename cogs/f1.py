@@ -10,7 +10,7 @@ class F1(commands.Cog):
    F1 Data Library
 
    By Joseph Libasora
-   Last updated: 31.Aug.2021
+   Last updated: 01.Sept.2021
    """
    teams = {
       "Mercedes": "MER",
@@ -76,37 +76,45 @@ class F1(commands.Cog):
 
 
    @commands.command(aliases=["F1"])
-   async def f1(self, ctx, type=None):
-      """Returns F1 Schedule"""
+   async def f1(self, ctx):
+      """Returns F1 Schedule (Full)"""
 
       schedule = await F1.getSchedule()
       embed = discord.Embed(
          colour=discord.Colour.red()
       )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
+      embed.set_author(name="F1 Schedule (Full)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
 
-      if type is None:
-         # Return next F1 race
-         embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
-         today = datetime.date.today()
+      for round in schedule:
+         title = f"Round {round['round']} {round['raceName']}"
+         dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
+         msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
+         embed.add_field(name=title, value=msg)
+      await ctx.send(embed=embed)
 
-         for round in schedule:
-            if today <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
-               title = f"Round {round['round']} {round['raceName']}"
-               dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
-               msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
-               embed.add_field(name=title, value=msg)
-               return await ctx.send(embed=embed)
-         embed.add_field(name="No New F1 Races", value="No new races for the F1 season")
-      else:
-         # Return full schedule
-         embed.set_author(name="F1 Schedule (Full)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
 
-         for round in schedule:
+   @commands.command(aliases=["f1.next", "F1.next"])
+   async def f1Next(self, ctx):
+      """Returns F1 Schedule (Next Round)"""
+
+      schedule = await F1.getSchedule()
+      embed = discord.Embed(
+         colour=discord.Colour.red()
+      )
+      embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
+      embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+
+      today = datetime.date.today()
+      for round in schedule:
+         if today <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
             title = f"Round {round['round']} {round['raceName']}"
             dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
             msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
             embed.add_field(name=title, value=msg)
+            return await ctx.send(embed=embed)
+      
+      embed.add_field(name="No New F1 Races", value="No new races for the F1 season")
       await ctx.send(embed=embed)
 
 
