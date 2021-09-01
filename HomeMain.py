@@ -94,7 +94,7 @@ for file_n in os.listdir("./cogs"):
       client.load_extension(f"cogs.{file_n[:-3]}")
 
 
-def main():
+if __name__ == "__main__":
    """
    Bot token management
    
@@ -102,14 +102,9 @@ def main():
     - Bot token is kept in the '.token.txt' file
     - This is to avoid the sharing of bot tokens
    """
-   global token
    try:
       with open("./.token.txt") as fd:
          token = fd.read().strip()
+      client.run(token)
    except FileNotFoundError:
       sys.exit("Warning, Error occured. No '.token.txt' file found!")
-
-
-if __name__ == "__main__":
-   main()
-   client.run(token)
