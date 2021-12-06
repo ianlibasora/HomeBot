@@ -50,7 +50,7 @@ class F1(commands.Cog):
             inline=True
          )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
-      embed.set_author(name="F1 World Drivers Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+      embed.set_author(name="F1 World Drivers Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
       await ctx.send(embed=embed)
 
 
@@ -71,7 +71,7 @@ class F1(commands.Cog):
             inline=True
          )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
-      embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+      embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
       await ctx.send(embed=embed)
 
 
@@ -84,7 +84,7 @@ class F1(commands.Cog):
          colour=discord.Colour.red()
       )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
-      embed.set_author(name="F1 Schedule (Full)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+      embed.set_author(name="F1 Schedule (Full)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
       for round in schedule:
          title = f"Round {round['round']} {round['raceName']}"
@@ -103,7 +103,7 @@ class F1(commands.Cog):
          colour=discord.Colour.red()
       )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
-      embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/working/images/f1.png")
+      embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
       today = datetime.date.today()
       for round in schedule:
