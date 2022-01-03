@@ -4,6 +4,7 @@ import os
 import discord
 from discord.ext import commands
 import sys
+from decouple import config
 
 """
 Discord Home Bot in Python
@@ -97,14 +98,6 @@ for file_n in os.listdir("./cogs"):
 if __name__ == "__main__":
    """
    Bot token management
-   
-   Note: 
-    - Bot token is kept in the '.token.txt' file
-    - This is to avoid the sharing of bot tokens
+   Bot token is handled through environment variables
    """
-   try:
-      with open("./.token.txt") as fd:
-         token = fd.read().strip()
-      client.run(token)
-   except FileNotFoundError:
-      sys.exit("Warning, Error occured. No '.token.txt' file found!")
+   client.run(config("TOKEN"))

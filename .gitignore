@@ -1,4 +1,5 @@
 *.txt
+*.env
 homebot
 cogs/__pycache__
 __pycache__

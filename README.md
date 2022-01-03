@@ -6,6 +6,7 @@ Home utility bot in discord using Python
 - [discord.py](https://pypi.org/project/discord.py/)
 - [aiohttp](https://pypi.org/project/aiohttp/)
 - [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
+- [python-decouple](https://pypi.org/project/python-decouple/)
 
 All modules can be installed using pip.
 
@@ -24,7 +25,7 @@ All modules can be installed using pip.
 
 ### Notes
 ----
-- Bot tokens are stored and read from a ".token.txt" file
+- Bot tokens are handled through environment variables
 
 ## Attribution
 - [METAR/TAF](https://www.aviationweather.gov/) API from Aviation Weather Center / National Weather Service, [(NOAA)](https://www.noaa.gov/) National Oceanic and Atmospheric Administration
