@@ -3,14 +3,13 @@
 import os
 import discord
 from discord.ext import commands
-import sys
 from decouple import config
 
 """
 Discord Home Bot in Python
 
 By Joseph Libasora
-Last updated: 01.Sept.2021
+Last updated: 20.MAR.2021
 """
 
 client = commands.Bot(command_prefix="!")

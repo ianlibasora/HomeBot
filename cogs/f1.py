@@ -10,7 +10,7 @@ class F1(commands.Cog):
    F1 Data Library
 
    By Joseph Libasora
-   Last updated: 01.Sept.2021
+   Last updated: 20.MAR.2022
    """
    teams = {
       "Mercedes": "MER",
@@ -84,12 +84,19 @@ class F1(commands.Cog):
          colour=discord.Colour.red()
       )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
-      embed.set_author(name="F1 Schedule (Full)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
+      embed.set_author(name="F1 Schedule", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
       for round in schedule:
          title = f"Round {round['round']} {round['raceName']}"
-         dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
-         msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
+         GPTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
+         tmpPayload = [
+            f"**{round['Circuit']['circuitName']}**",
+            f"{round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}",
+            "**Grand Prix**",
+            GPTime
+         ]
+         payload = "\n> ".join(tmpPayload)
+         msg = f"> {payload}"
          embed.add_field(name=title, value=msg)
       await ctx.send(embed=embed)
 
