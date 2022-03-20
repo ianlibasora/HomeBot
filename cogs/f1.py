@@ -45,8 +45,8 @@ class F1(commands.Cog):
 
       for driver in wdc:
          embed.add_field(
-            name=f"#{driver['position']} {driver['Driver']['code']}", 
-            value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\n> {driver['Constructors'][0]['name']}\n> {driver['points']}", 
+            name=f"#{driver['position']} {driver['Driver']['code']}",
+            value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\n> {driver['Constructors'][0]['name']}\n> {driver['points']}",
             inline=True
          )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
@@ -66,8 +66,8 @@ class F1(commands.Cog):
       for team in wcc:
          code = self.teams[team['Constructor']['name']]
          embed.add_field(
-            name=f"#{team['position']} {code}", 
-            value=f"> {team['Constructor']['name']}\n> {team['points']}", 
+            name=f"#{team['position']} {code}",
+            value=f"> {team['Constructor']['name']}\n> {team['points']}",
             inline=True
          )
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
@@ -112,15 +112,39 @@ class F1(commands.Cog):
       embed.set_footer(icon_url=ctx.author.avatar_url, text="Sourced from http://ergast.com/mrd/")
       embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
-      today = datetime.date.today()
       for round in schedule:
-         if today <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
+         if datetime.date.today() <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
             title = f"Round {round['round']} {round['raceName']}"
-            dateTime = f"{round['date']} {round['time'].replace('Z', ' UTC')}"
-            msg = f"> {round['Circuit']['circuitName']}\n> {round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}\n> {dateTime}"
+            payloadLst = [
+               f"**{round['Circuit']['circuitName']}**",
+               f"{round['Circuit']['Location']['locality']}, {round['Circuit']['Location']['country']}",
+               "**Free Practice 1 (FP1)**",
+               f"{round['FirstPractice']['date']} {round['FirstPractice']['time'].replace('Z', ' UTC')}",
+            ]
+            if "Sprint" in round:
+               # If Sprint Weekend
+               payloadLst.append("**Qualifying**")
+               payloadLst.append(f"{round['Qualifying']['date']} {round['Qualifying']['time'].replace('Z', ' UTC')}")
+               payloadLst.append("**Free Practice 2 (FP2)**")
+               payloadLst.append(f"{round['SecondPractice']['date']} {round['SecondPractice']['time'].replace('Z', ' UTC')}")
+               payloadLst.append("**Sprint**")
+               payloadLst.append(f"{round['Qualifying']['date']} {round['Qualifying']['time'].replace('Z', ' UTC')}")
+            else:
+               # If Normal Weekend
+               payloadLst.append("**Free Practice 2 (FP2)**")
+               payloadLst.append(f"{round['SecondPractice']['date']} {round['SecondPractice']['time'].replace('Z', ' UTC')}")
+               payloadLst.append("**Free Practice 3 (FP3)**")
+               payloadLst.append(f"{round['ThirdPractice']['date']} {round['ThirdPractice']['time'].replace('Z', ' UTC')}")
+               payloadLst.append("**Qualifying**")
+               payloadLst.append(f"{round['Qualifying']['date']} {round['Qualifying']['time'].replace('Z', ' UTC')}")
+
+            payloadLst.append("**Grand Prix**")
+            payloadLst.append(f"{round['date']} {round['time'].replace('Z', ' UTC')}")
+            payload = "\n> ".join(payloadLst)
+            msg = f"> {payload}"
             embed.add_field(name=title, value=msg)
             return await ctx.send(embed=embed)
-      
+
       embed.add_field(name="No New F1 Races", value="No new races for the F1 season")
       await ctx.send(embed=embed)
 
@@ -169,7 +193,7 @@ class F1(commands.Cog):
                return dataJSON["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"]
             else:
                return "Warning, web error occured. Code: {web_resp.status}"
-      return "Warning, request timeout"   
+      return "Warning, request timeout"
 
 
 def setup(client):
