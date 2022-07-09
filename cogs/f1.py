@@ -128,7 +128,7 @@ class F1(commands.Cog):
                payloadLst.append("**Free Practice 2 (FP2)**")
                payloadLst.append(f"{round['SecondPractice']['date']} {round['SecondPractice']['time'].replace('Z', ' UTC')}")
                payloadLst.append("**Sprint**")
-               payloadLst.append(f"{round['Qualifying']['date']} {round['Qualifying']['time'].replace('Z', ' UTC')}")
+               payloadLst.append(f"{round['Sprint']['date']} {round['Sprint']['time'].replace('Z', ' UTC')}")
             else:
                # If Normal Weekend
                payloadLst.append("**Free Practice 2 (FP2)**")
