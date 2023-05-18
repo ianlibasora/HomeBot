@@ -31,6 +31,12 @@ async def on_ready():
     logger.info(f"User: {client.user} (ID: {client.user.id}). Startup")
 
 
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("Error. Command not found")
+
+
 @client.command()
 async def ping(ctx):
     """Returns latency between bot and server"""
@@ -83,6 +89,12 @@ async def load(ctx, path):
         await ctx.send(f"Failed to load Cog ({path})")
 
 
+@load.error
+async def loadError(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument(s). Eg. !load [path]")
+
+
 @client.command()
 async def unload(ctx, path):
     """Unloads cogs"""
@@ -94,6 +106,12 @@ async def unload(ctx, path):
     except Exception:
         logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to unload Cog ({path})")
         await ctx.send(f"Failed to unload Cog ({path})")
+
+
+@unload.error
+async def unloadError(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument(s). Eg. !unload [path]")
 
 
 @client.command()
@@ -108,6 +126,12 @@ async def reload(ctx, path):
     except Exception:
         logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to reload Cog ({path})")
         await ctx.send(f"Failed to reload Cog ({path})")
+
+
+@reload.error
+async def reloadError(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument(s). Eg. !reload [path]")
 
 
 @client.command()
