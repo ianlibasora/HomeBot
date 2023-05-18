@@ -57,10 +57,10 @@ async def help(ctx):
     embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
 
     # # f1.py
-    # embed.add_field(name="!f1", value="> Request F1 (Full) Schedule", inline=True)
-    # embed.add_field(name="!f1.next", value="> Request F1 (Next) Schedule", inline=True)
-    # embed.add_field(name="!wdc", value="> Request F1 WDC Standings", inline=True)
-    # embed.add_field(name="!wcc", value="> Request F1 WCC Standings", inline=True)
+    embed.add_field(name="!f1", value="> Request F1 (Full) Schedule", inline=True)
+    embed.add_field(name="!f1.next", value="> Request F1 (Next) Schedule", inline=True)
+    embed.add_field(name="!wdc", value="> Request F1 WDC Standings", inline=True)
+    embed.add_field(name="!wcc", value="> Request F1 WCC Standings", inline=True)
 
     embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
     embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author}")
