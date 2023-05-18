@@ -2,11 +2,19 @@
 
 import logging
 from logging.config import dictConfig
+from os import getenv
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 
 load_dotenv()
+
+
+BASE_DIR_PATH = Path(__file__).parent
+COGS_DIR = "cmds"
+COGS_DIR_PATH = BASE_DIR_PATH.joinpath(COGS_DIR)
+BOT_TOKEN = getenv("TOKEN")
 
 
 LOGGING_CONFIG = {

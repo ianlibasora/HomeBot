@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
 
-from os import getenv
-from pathlib import Path
-
 import discord
 from discord.ext import commands
 
 import settings
-
-
-BASE_DIR_PATH = Path(__file__).parent
-COGS_DIR = "cmds"
-COGS_DIR_PATH = BASE_DIR_PATH.joinpath(COGS_DIR)
 
 
 intents = discord.Intents.default()
@@ -25,10 +17,10 @@ logger = settings.logging.getLogger("bot")
 async def on_ready():
     """Reports when main bot is ready"""
 
-    for file in COGS_DIR_PATH.iterdir():
+    for file in settings.COGS_DIR_PATH.iterdir():
         if str(file).endswith(".py"):
-            await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
-    logger.info(f"User: {client.user} (ID: {client.user.id}). Startup")
+            await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). HomeMain core startup")
 
 
 @client.event
@@ -53,22 +45,19 @@ async def help(ctx):
         colour=discord.Colour.blue()
     )
 
-    # # aptWX.py
-    # embed.add_field(name="!metar [airport_code]", value="> METAR report for a given airport", inline=True)
-    # embed.add_field(name="!taf [airport_code]", value="> TAF report for a given airport", inline=True)
-    # embed.add_field(name="!wx [airport_code]", value="> Full METAR/TAF report for a given airport", inline=True)
-
-    # # times.py
-    # embed.add_field(name="!time [day]", value="> Request class timetable", inline=True)
+    # # airport.py
+    embed.add_field(name="!metar [airport_code]", value="> Airport METAR report", inline=True)
+    embed.add_field(name="!taf [airport_code]", value="> Airport TAF report", inline=True)
+    embed.add_field(name="!wx [airport_code]", value="> Airport full METAR/TAF report", inline=True)
     
-    # # covid19.py
-    # embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
+    # covid19.py
+    embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
 
     # # f1.py
-    # embed.add_field(name="!f1", value="> Request F1 (Full) Schedule", inline=True)
-    # embed.add_field(name="!f1.next", value="> Request F1 (Next) Schedule", inline=True)
-    # embed.add_field(name="!wdc", value="> Request F1 WDC Standings", inline=True)
-    # embed.add_field(name="!wcc", value="> Request F1 WCC Standings", inline=True)
+    embed.add_field(name="!f1", value="> Request F1 (Full) Schedule", inline=True)
+    embed.add_field(name="!f1.next", value="> Request F1 (Next) Schedule", inline=True)
+    embed.add_field(name="!wdc", value="> Request F1 WDC Standings", inline=True)
+    embed.add_field(name="!wcc", value="> Request F1 WCC Standings", inline=True)
 
     embed.set_thumbnail(url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/home.png")
     embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author}")
@@ -81,7 +70,7 @@ async def load(ctx, path):
     """Loads cogs"""
 
     try:
-        await client.load_extension(f"{COGS_DIR}.{path}")
+        await client.load_extension(f"{settings.COGS_DIR}.{path}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) loaded")
         await ctx.send(f"Cog ({path}) loaded")
     except Exception:
@@ -100,7 +89,7 @@ async def unload(ctx, path):
     """Unloads cogs"""
 
     try:
-        await client.unload_extension(f"{COGS_DIR}.{path}")
+        await client.unload_extension(f"{settings.COGS_DIR}.{path}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) unloaded")
         await ctx.send(f"Cog ({path}) unloaded")
     except Exception:
@@ -119,8 +108,8 @@ async def reload(ctx, path):
     """Reloads cog"""
 
     try:
-        await client.unload_extension(f"{COGS_DIR}.{path}")
-        await client.load_extension(f"{COGS_DIR}.{path}")
+        await client.unload_extension(f"{settings.COGS_DIR}.{path}")
+        await client.load_extension(f"{settings.COGS_DIR}.{path}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) reloaded")
         await ctx.send(f"Cog ({path}) reloaded")
     except Exception:
@@ -139,10 +128,10 @@ async def freload(ctx):
     """Reload all cogs"""
 
     try:
-        for file in COGS_DIR_PATH.iterdir():
+        for file in settings.COGS_DIR_PATH.iterdir():
             if str(file).endswith(".py"):
-                await client.unload_extension(f"{COGS_DIR}.{file.name[:-3]}")
-                await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
+                await client.unload_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
+                await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Reloaded all cogs")
         await ctx.send("Reloaded all cogs")
     except Exception:
@@ -151,4 +140,4 @@ async def freload(ctx):
 
 
 if __name__ == "__main__":
-    client.run(getenv("TOKEN"), root_logger=True)
+    client.run(settings.BOT_TOKEN, root_logger=True)
