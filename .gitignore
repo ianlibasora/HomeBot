@@ -7,3 +7,4 @@ homebot
 cogs/__pycache__
 __pycache__
 cogs/*.json
+logs

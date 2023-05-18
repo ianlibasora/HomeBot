@@ -5,17 +5,8 @@ from pathlib import Path
 
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
 
-load_dotenv()
-
-
-"""
-Discord HomeBot
-
-Joseph Libasora
-Last updated: 18.MAY.2023
-"""
+import settings
 
 
 BASE_DIR_PATH = Path(__file__).parent
@@ -27,6 +18,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = commands.Bot(command_prefix="!", intents=intents)
 client.remove_command("help")
+logger = settings.logging.getLogger("bot")
 
 
 @client.event
@@ -36,7 +28,7 @@ async def on_ready():
     for file in COGS_DIR_PATH.iterdir():
         if str(file).endswith(".py"):
             await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
-    print("HomeBot activated")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). Startup")
 
 
 @client.command()
@@ -83,6 +75,7 @@ async def load(ctx, path):
     """Loads cogs"""
 
     await client.load_extension(f"{COGS_DIR}.{path}")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) loaded")
     await ctx.send(f"Cog ({path}) loaded")
 
 
@@ -91,6 +84,7 @@ async def unload(ctx, path):
     """Unloads cogs"""
 
     await client.unload_extension(f"{COGS_DIR}.{path}")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) unloaded")
     await ctx.send(f"Cog ({path}) unloaded")
 
 
@@ -100,6 +94,7 @@ async def reload(ctx, path):
 
     await client.unload_extension(f"{COGS_DIR}.{path}")
     await client.load_extension(f"{COGS_DIR}.{path}")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) reloaded")
     await ctx.send(f"Cog ({path}) reloaded")
 
 
@@ -111,8 +106,9 @@ async def freload(ctx):
         if str(file).endswith(".py"):
             await client.unload_extension(f"{COGS_DIR}.{file.name[:-3]}")
             await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). Reloaded all cogs")
     await ctx.send("Reloaded all cogs")
 
 
 if __name__ == "__main__":
-    client.run(getenv("TOKEN"))
+    client.run(getenv("TOKEN"), root_logger=True)
