@@ -31,6 +31,12 @@ async def on_ready():
     logger.info(f"User: {client.user} (ID: {client.user.id}). Startup")
 
 
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("Error. Command not found")
+
+
 @client.command()
 async def ping(ctx):
     """Returns latency between bot and server"""
@@ -76,11 +82,17 @@ async def load(ctx, path):
 
     try:
         await client.load_extension(f"{COGS_DIR}.{path}")
-        logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) loaded")
+        logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) loaded")
         await ctx.send(f"Cog ({path}) loaded")
     except Exception:
-        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to load Cog ({path})")
+        logger.warning(f"User: {ctx.author} (ID: {ctx.author.id}). Failed to load Cog ({path})")
         await ctx.send(f"Failed to load Cog ({path})")
+
+
+@load.error
+async def loadError(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument(s). Eg. !load [path]")
 
 
 @client.command()
@@ -89,11 +101,17 @@ async def unload(ctx, path):
 
     try:
         await client.unload_extension(f"{COGS_DIR}.{path}")
-        logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) unloaded")
+        logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) unloaded")
         await ctx.send(f"Cog ({path}) unloaded")
     except Exception:
-        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to unload Cog ({path})")
+        logger.warning(f"User: {ctx.author} (ID: {ctx.author.id}). Failed to unload Cog ({path})")
         await ctx.send(f"Failed to unload Cog ({path})")
+
+
+@unload.error
+async def unloadError(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument(s). Eg. !unload [path]")
 
 
 @client.command()
@@ -103,11 +121,17 @@ async def reload(ctx, path):
     try:
         await client.unload_extension(f"{COGS_DIR}.{path}")
         await client.load_extension(f"{COGS_DIR}.{path}")
-        logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) reloaded")
+        logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) reloaded")
         await ctx.send(f"Cog ({path}) reloaded")
     except Exception:
-        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to reload Cog ({path})")
+        logger.warning(f"User: {ctx.author} (ID: {ctx.author.id}). Failed to reload Cog ({path})")
         await ctx.send(f"Failed to reload Cog ({path})")
+
+
+@reload.error
+async def reloadError(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Missing required argument(s). Eg. !reload [path]")
 
 
 @client.command()
@@ -119,10 +143,10 @@ async def freload(ctx):
             if str(file).endswith(".py"):
                 await client.unload_extension(f"{COGS_DIR}.{file.name[:-3]}")
                 await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
-        logger.info(f"User: {client.user} (ID: {client.user.id}). Reloaded all cogs")
+        logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Reloaded all cogs")
         await ctx.send("Reloaded all cogs")
     except Exception:
-        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to reload Cogs")
+        logger.warning(f"User: {ctx.author} (ID: {ctx.author.id}). Failed to reload Cogs")
         await ctx.send(f"Failed to reload Cogs")
 
 
