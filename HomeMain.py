@@ -53,8 +53,8 @@ async def help(ctx):
     # # times.py
     # embed.add_field(name="!time [day]", value="> Request class timetable", inline=True)
     
-    # # covid19.py
-    # embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
+    # covid19.py
+    embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
 
     # # f1.py
     # embed.add_field(name="!f1", value="> Request F1 (Full) Schedule", inline=True)
