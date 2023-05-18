@@ -49,9 +49,6 @@ async def help(ctx):
     embed.add_field(name="!metar [airport_code]", value="> Airport METAR report", inline=True)
     embed.add_field(name="!taf [airport_code]", value="> Airport TAF report", inline=True)
     embed.add_field(name="!wx [airport_code]", value="> Airport full METAR/TAF report", inline=True)
-
-    # # times.py
-    # embed.add_field(name="!time [day]", value="> Request class timetable", inline=True)
     
     # covid19.py
     embed.add_field(name="!covid", value="> Request Ireland COVID-19 Data", inline=True)
