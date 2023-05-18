@@ -2,30 +2,39 @@
 # HomeBot
 Home utility bot in discord using Python
 
-## Dependencies
-- [discord.py](https://pypi.org/project/discord.py/)
-- [aiohttp](https://pypi.org/project/aiohttp/)
-- [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
-- [python-decouple](https://pypi.org/project/python-decouple/)
 
-All modules can be installed using pip.
+## Dependencies
+All dependancies are contained within `requirements.txt` file. To install run:
+```
+pip3 install -r requirements.txt
+```
+
+
+## How to Run
+```
+python3 HomeMain.py
+```
+
+Alternatively, a docker image can be built and run using the included `Dockerfile`. Eg.
+```
+docker built -t name-of-your-docker-image .
+
+docker run --rm -d -e TOKEN="insert-your-token-here" name-of-your-docker-image
+# A valid Discord token will need to be passed into the docker container
+```
+
 
 ## Features
 1. Airport weather data requests
    - Airport METAR reports
    - Airport TAF reports
-2. Timetable Script
-   - Class timetables
-3. F1 Standings
+2. F1 Standings
    - F1 Schedule
    - World Drivers Standings
    - World Constructors Standings
-4. Ireland COVID-19 Data
+3. Ireland COVID-19 Data
    - Ireland new COVID-19 data
 
-### Notes
-----
-- Bot tokens are handled through environment variables
 
 ## Attribution
 - [METAR/TAF](https://www.aviationweather.gov/) API from Aviation Weather Center / National Weather Service, [(NOAA)](https://www.noaa.gov/) National Oceanic and Atmospheric Administration
@@ -34,9 +43,9 @@ All modules can be installed using pip.
 - [COVID-19](https://www.flaticon.com/free-icon/covid-19_2785819?term=covid&page=1&position=31&page=1&position=31&related_id=2785819&origin=search) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
 - [Plane](https://www.flaticon.com/free-icon/plane_129500) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
 - [Home](https://www.flaticon.com/free-icon/home_553416?term=home&page=1&position=45) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
-- [Schedule](https://www.flaticon.com/free-icon/schedule_3652191?term=calendar&page=1&position=7&page=1&position=7&related_id=3652191&origin=search) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
 - [F1](https://www.flaticon.com/free-icon/f1_2418779?term=f1&page=1&position=8&page=1&position=8&related_id=2418779&origin=search) icon by [Freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com/)
+
 
 By Joseph Libasora
 
-Last updated: 20.MAR.2022, Python 3.8.10
+Last updated: 18.MAY.2023
