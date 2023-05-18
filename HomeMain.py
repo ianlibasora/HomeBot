@@ -20,7 +20,7 @@ async def on_ready():
     for file in settings.COGS_DIR_PATH.iterdir():
         if str(file).endswith(".py"):
             await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
-    logger.info(f"User: {client.user} (ID: {client.user.id}). Startup")
+    logger.info(f"User: {client.user} (ID: {client.user.id}). HomeMain core startup")
 
 
 @client.event
@@ -45,10 +45,10 @@ async def help(ctx):
         colour=discord.Colour.blue()
     )
 
-    # # aptWX.py
-    # embed.add_field(name="!metar [airport_code]", value="> METAR report for a given airport", inline=True)
-    # embed.add_field(name="!taf [airport_code]", value="> TAF report for a given airport", inline=True)
-    # embed.add_field(name="!wx [airport_code]", value="> Full METAR/TAF report for a given airport", inline=True)
+    # # airport.py
+    embed.add_field(name="!metar [airport_code]", value="> Airport METAR report", inline=True)
+    embed.add_field(name="!taf [airport_code]", value="> Airport TAF report", inline=True)
+    embed.add_field(name="!wx [airport_code]", value="> Airport full METAR/TAF report", inline=True)
 
     # # times.py
     # embed.add_field(name="!time [day]", value="> Request class timetable", inline=True)
