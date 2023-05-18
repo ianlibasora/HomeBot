@@ -74,40 +74,56 @@ async def help(ctx):
 async def load(ctx, path):
     """Loads cogs"""
 
-    await client.load_extension(f"{COGS_DIR}.{path}")
-    logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) loaded")
-    await ctx.send(f"Cog ({path}) loaded")
+    try:
+        await client.load_extension(f"{COGS_DIR}.{path}")
+        logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) loaded")
+        await ctx.send(f"Cog ({path}) loaded")
+    except Exception:
+        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to load Cog ({path})")
+        await ctx.send(f"Failed to load Cog ({path})")
 
 
 @client.command()
 async def unload(ctx, path):
     """Unloads cogs"""
 
-    await client.unload_extension(f"{COGS_DIR}.{path}")
-    logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) unloaded")
-    await ctx.send(f"Cog ({path}) unloaded")
+    try:
+        await client.unload_extension(f"{COGS_DIR}.{path}")
+        logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) unloaded")
+        await ctx.send(f"Cog ({path}) unloaded")
+    except Exception:
+        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to unload Cog ({path})")
+        await ctx.send(f"Failed to unload Cog ({path})")
 
 
 @client.command()
 async def reload(ctx, path):
     """Reloads cog"""
 
-    await client.unload_extension(f"{COGS_DIR}.{path}")
-    await client.load_extension(f"{COGS_DIR}.{path}")
-    logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) reloaded")
-    await ctx.send(f"Cog ({path}) reloaded")
+    try:
+        await client.unload_extension(f"{COGS_DIR}.{path}")
+        await client.load_extension(f"{COGS_DIR}.{path}")
+        logger.info(f"User: {client.user} (ID: {client.user.id}). Cog ({path}) reloaded")
+        await ctx.send(f"Cog ({path}) reloaded")
+    except Exception:
+        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to reload Cog ({path})")
+        await ctx.send(f"Failed to reload Cog ({path})")
 
 
 @client.command()
 async def freload(ctx):
     """Reload all cogs"""
 
-    for file in COGS_DIR_PATH.iterdir():
-        if str(file).endswith(".py"):
-            await client.unload_extension(f"{COGS_DIR}.{file.name[:-3]}")
-            await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
-    logger.info(f"User: {client.user} (ID: {client.user.id}). Reloaded all cogs")
-    await ctx.send("Reloaded all cogs")
+    try:
+        for file in COGS_DIR_PATH.iterdir():
+            if str(file).endswith(".py"):
+                await client.unload_extension(f"{COGS_DIR}.{file.name[:-3]}")
+                await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
+        logger.info(f"User: {client.user} (ID: {client.user.id}). Reloaded all cogs")
+        await ctx.send("Reloaded all cogs")
+    except Exception:
+        logger.warning(f"User: {client.user} (ID: {client.user.id}). Failed to reload Cogs")
+        await ctx.send(f"Failed to reload Cogs")
 
 
 if __name__ == "__main__":
