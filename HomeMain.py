@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
 
-from os import getenv
-from pathlib import Path
-
 import discord
 from discord.ext import commands
 
 import settings
-
-
-BASE_DIR_PATH = Path(__file__).parent
-COGS_DIR = "cmds"
-COGS_DIR_PATH = BASE_DIR_PATH.joinpath(COGS_DIR)
 
 
 intents = discord.Intents.default()
@@ -25,9 +17,9 @@ logger = settings.logging.getLogger("bot")
 async def on_ready():
     """Reports when main bot is ready"""
 
-    for file in COGS_DIR_PATH.iterdir():
+    for file in settings.COGS_DIR_PATH.iterdir():
         if str(file).endswith(".py"):
-            await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
+            await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
     logger.info(f"User: {client.user} (ID: {client.user.id}). Startup")
 
 
@@ -81,7 +73,7 @@ async def load(ctx, path):
     """Loads cogs"""
 
     try:
-        await client.load_extension(f"{COGS_DIR}.{path}")
+        await client.load_extension(f"{settings.COGS_DIR}.{path}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) loaded")
         await ctx.send(f"Cog ({path}) loaded")
     except Exception:
@@ -100,7 +92,7 @@ async def unload(ctx, path):
     """Unloads cogs"""
 
     try:
-        await client.unload_extension(f"{COGS_DIR}.{path}")
+        await client.unload_extension(f"{settings.COGS_DIR}.{path}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) unloaded")
         await ctx.send(f"Cog ({path}) unloaded")
     except Exception:
@@ -119,8 +111,8 @@ async def reload(ctx, path):
     """Reloads cog"""
 
     try:
-        await client.unload_extension(f"{COGS_DIR}.{path}")
-        await client.load_extension(f"{COGS_DIR}.{path}")
+        await client.unload_extension(f"{settings.COGS_DIR}.{path}")
+        await client.load_extension(f"{settings.COGS_DIR}.{path}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Cog ({path}) reloaded")
         await ctx.send(f"Cog ({path}) reloaded")
     except Exception:
@@ -139,10 +131,10 @@ async def freload(ctx):
     """Reload all cogs"""
 
     try:
-        for file in COGS_DIR_PATH.iterdir():
+        for file in settings.COGS_DIR_PATH.iterdir():
             if str(file).endswith(".py"):
-                await client.unload_extension(f"{COGS_DIR}.{file.name[:-3]}")
-                await client.load_extension(f"{COGS_DIR}.{file.name[:-3]}")
+                await client.unload_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
+                await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Reloaded all cogs")
         await ctx.send("Reloaded all cogs")
     except Exception:
@@ -151,4 +143,4 @@ async def freload(ctx):
 
 
 if __name__ == "__main__":
-    client.run(getenv("TOKEN"), root_logger=True)
+    client.run(settings.BOT_TOKEN, root_logger=True)
