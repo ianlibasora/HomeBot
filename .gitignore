@@ -1,6 +1,10 @@
+
+*venv*
+.idea
+.vscode
 *.env
 homebot
 cogs/__pycache__
 __pycache__
 cogs/*.json
-HomeBotEnv
+logs
