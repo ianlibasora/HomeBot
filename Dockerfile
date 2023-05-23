@@ -1,5 +1,5 @@
 
-# Gitlab CI Docker image
+# HomeBot Docker Image
 
 FROM python:3.10-slim
 
