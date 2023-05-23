@@ -2,9 +2,11 @@
 
 import datetime
 
-import aiohttp
 import discord
+from aiohttp import ClientTimeout, ClientSession
 from discord.ext import commands
+
+from settings import HTTP_TIMEOUT
 
 
 class F1(commands.Cog):
@@ -38,9 +40,7 @@ class F1(commands.Cog):
         """Returns F1 World Drivers Championship Standings"""
 
         wdc = await F1.getNewWDC()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
+        embed = discord.Embed(colour=discord.Colour.red())
 
         for driver in wdc:
             embed.add_field(
@@ -48,7 +48,7 @@ class F1(commands.Cog):
                 value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\n> {driver['Constructors'][0]['name']}\n> {driver['points']}",
                 inline=True
             )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 World Drivers Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
         await ctx.send(embed=embed)
 
@@ -58,9 +58,7 @@ class F1(commands.Cog):
         """Returns F1 World Constructors Championship Standings"""
 
         wcc = await F1.getNewWCC()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
+        embed = discord.Embed(colour=discord.Colour.red())
 
         for team in wcc:
             code = self.TEAMS[team['Constructor']['name']]
@@ -69,7 +67,7 @@ class F1(commands.Cog):
                 value=f"> {team['Constructor']['name']}\n> {team['points']}",
                 inline=True
             )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
         await ctx.send(embed=embed)
 
@@ -79,10 +77,8 @@ class F1(commands.Cog):
         """Returns F1 Schedule (Full)"""
 
         schedule = await F1.getSchedule()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed = discord.Embed(colour=discord.Colour.red())
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 Schedule", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
         for round in schedule:
@@ -105,10 +101,8 @@ class F1(commands.Cog):
         """Returns F1 Schedule (Next Round)"""
 
         schedule = await F1.getSchedule()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed = discord.Embed(colour=discord.Colour.red())
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
         for round in schedule:
@@ -153,8 +147,7 @@ class F1(commands.Cog):
         """Async web request current F1 schedule"""
 
         url = "http://ergast.com/api/f1/current.json"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
                     dataJSON = await web_resp.json()
@@ -168,8 +161,7 @@ class F1(commands.Cog):
         """Async web request F1 World Drivers Championship standings"""
 
         url = "http://ergast.com/api/f1/current/driverStandings.json"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
                     dataJSON = await web_resp.json()
@@ -184,8 +176,7 @@ class F1(commands.Cog):
         """Async web request F1 World Constructors Championship standings"""
 
         url = "http://ergast.com/api/f1/current/constructorStandings.json"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
                     dataJSON = await web_resp.json()

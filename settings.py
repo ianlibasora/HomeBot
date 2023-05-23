@@ -15,6 +15,15 @@ BASE_DIR_PATH = Path(__file__).parent
 COGS_DIR = "cmds"
 COGS_DIR_PATH = BASE_DIR_PATH.joinpath(COGS_DIR)
 BOT_TOKEN = getenv("TOKEN")
+HTTP_TIMEOUT = 10
+LOGS_DIR = "logs"
+LOGS_DIR_PATH = BASE_DIR_PATH.joinpath(LOGS_DIR)
+LOG_FILE = "info.log"
+LOG_FILE_PATH = LOGS_DIR_PATH.joinpath(LOG_FILE)
+
+
+# INIT
+LOGS_DIR_PATH.mkdir(exist_ok=True)
 
 
 LOGGING_CONFIG = {
@@ -38,7 +47,7 @@ LOGGING_CONFIG = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "logs/infos.log",
+            "filename": str(LOG_FILE_PATH),
             "mode": "w",
             "formatter": "standard"
         },
