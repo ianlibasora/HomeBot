@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
-import aiohttp
 import discord
+from aiohttp import ClientTimeout, ClientSession
 from bs4 import BeautifulSoup
 from discord.ext import commands
+
+from settings import HTTP_TIMEOUT
 
 
 class Airport(commands.Cog):
@@ -60,12 +62,10 @@ class Airport(commands.Cog):
         """ASYNC Web request airport METAR data"""
 
         url = f"https://aviationweather.gov/metar/data?ids={apt}"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
-                    web = await web_resp.text()
-                    soup = BeautifulSoup(web, "html.parser")
+                    soup = BeautifulSoup(await web_resp.text(), "html.parser")
                     try:
                         return soup.code.text
                     except AttributeError:
@@ -80,12 +80,10 @@ class Airport(commands.Cog):
         """ASYNC Web request airport TAF data"""
 
         url = f"https://aviationweather.gov/taf/data?ids={apt}"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
-                    web = await web_resp.text()
-                    soup = BeautifulSoup(web, "html.parser")
+                    soup = BeautifulSoup(await web_resp.text(), "html.parser")
                     try:
                         return soup.code.text
                     except AttributeError:

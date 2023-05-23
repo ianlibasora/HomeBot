@@ -2,9 +2,11 @@
 
 import datetime
 
-import aiohttp
 import discord
+from aiohttp import ClientTimeout, ClientSession
 from discord.ext import commands
+
+from settings import HTTP_TIMEOUT
 
 
 class F1(commands.Cog):
@@ -145,8 +147,7 @@ class F1(commands.Cog):
         """Async web request current F1 schedule"""
 
         url = "http://ergast.com/api/f1/current.json"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
                     dataJSON = await web_resp.json()
@@ -160,8 +161,7 @@ class F1(commands.Cog):
         """Async web request F1 World Drivers Championship standings"""
 
         url = "http://ergast.com/api/f1/current/driverStandings.json"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
                     dataJSON = await web_resp.json()
@@ -176,8 +176,7 @@ class F1(commands.Cog):
         """Async web request F1 World Constructors Championship standings"""
 
         url = "http://ergast.com/api/f1/current/constructorStandings.json"
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as sesh:
+        async with ClientSession(timeout=ClientTimeout(total=HTTP_TIMEOUT)) as sesh:
             async with sesh.get(url) as web_resp:
                 if web_resp.status == 200:
                     dataJSON = await web_resp.json()

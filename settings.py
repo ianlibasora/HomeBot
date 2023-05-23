@@ -15,6 +15,7 @@ BASE_DIR_PATH = Path(__file__).parent
 COGS_DIR = "cmds"
 COGS_DIR_PATH = BASE_DIR_PATH.joinpath(COGS_DIR)
 BOT_TOKEN = getenv("TOKEN")
+HTTP_TIMEOUT = 10
 
 
 LOGGING_CONFIG = {
