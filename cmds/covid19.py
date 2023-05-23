@@ -26,10 +26,7 @@ class Covid19(commands.Cog):
         """Returns Ireland New COVID-19 Cases Data"""
 
         data = await Covid19.getCovidData()
-        embed = discord.Embed(
-            colour=discord.Colour.gold()
-        )
-
+        embed = discord.Embed(colour=discord.Colour.gold())
         embed.add_field(name="New COVID-19 Cases", value=f"> {data['ConfirmedCovidCases']}", inline=True)
         embed.add_field(name="New Weekly COVID-19 Deaths", value=f"> {data['ConfirmedCovidDeaths']}", inline=True)
 

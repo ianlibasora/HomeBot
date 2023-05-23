@@ -24,9 +24,7 @@ class Airport(commands.Cog):
     async def metar(self, ctx, apt="EIDW"):
         """Returns METAR for airport passed as arguement"""
 
-        embed = discord.Embed(
-            colour=discord.Colour.blue()
-        )
+        embed = discord.Embed(colour=discord.Colour.blue())
         embed.add_field(name=f"{apt.upper()} METAR", value=f"> {await Airport.AsyncMETAR(apt)}", inline=False)
         embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from aviationweather.gov")
         embed.set_author(name="Airport Weather", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
@@ -38,9 +36,7 @@ class Airport(commands.Cog):
         """Returns TAF for airport passed as arguement"""
         
 
-        embed = discord.Embed(
-            colour=discord.Colour.blue()
-        )
+        embed = discord.Embed(colour=discord.Colour.blue())
         embed.add_field(name=f"{apt.upper()} TAF", value=f"> {await Airport.AsyncTAF(apt)}", inline=False)
         embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from aviationweather.gov")
         embed.set_author(name="Airport Weather", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/plane.png")
@@ -51,9 +47,7 @@ class Airport(commands.Cog):
     async def report(self, ctx, apt="EIDW"):
         """Returns airport METAR/TAF passed as arguement"""
 
-        embed = discord.Embed(
-            colour=discord.Colour.blue()
-        )
+        embed = discord.Embed(colour=discord.Colour.blue())
         embed.add_field(name=f"{apt.upper()} METAR", value=f"> {await Airport.AsyncMETAR(apt)}", inline=False)
         embed.add_field(name=f"{apt.upper()} TAF", value=f"> {await Airport.AsyncTAF(apt)}", inline=False)
         embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from aviationweather.gov")

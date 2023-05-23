@@ -38,9 +38,7 @@ class F1(commands.Cog):
         """Returns F1 World Drivers Championship Standings"""
 
         wdc = await F1.getNewWDC()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
+        embed = discord.Embed(colour=discord.Colour.red())
 
         for driver in wdc:
             embed.add_field(
@@ -48,7 +46,7 @@ class F1(commands.Cog):
                 value=f"> {driver['Driver']['givenName']} {driver['Driver']['familyName']}\n> {driver['Constructors'][0]['name']}\n> {driver['points']}",
                 inline=True
             )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 World Drivers Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
         await ctx.send(embed=embed)
 
@@ -58,9 +56,7 @@ class F1(commands.Cog):
         """Returns F1 World Constructors Championship Standings"""
 
         wcc = await F1.getNewWCC()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
+        embed = discord.Embed(colour=discord.Colour.red())
 
         for team in wcc:
             code = self.TEAMS[team['Constructor']['name']]
@@ -69,7 +65,7 @@ class F1(commands.Cog):
                 value=f"> {team['Constructor']['name']}\n> {team['points']}",
                 inline=True
             )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 World Constructors Championship Standings", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
         await ctx.send(embed=embed)
 
@@ -79,10 +75,8 @@ class F1(commands.Cog):
         """Returns F1 Schedule (Full)"""
 
         schedule = await F1.getSchedule()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed = discord.Embed(colour=discord.Colour.red())
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 Schedule", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
         for round in schedule:
@@ -105,10 +99,8 @@ class F1(commands.Cog):
         """Returns F1 Schedule (Next Round)"""
 
         schedule = await F1.getSchedule()
-        embed = discord.Embed(
-            colour=discord.Colour.red()
-        )
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from http://ergast.com/mrd/")
+        embed = discord.Embed(colour=discord.Colour.red())
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
         for round in schedule:
