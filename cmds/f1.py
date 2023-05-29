@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import datetime
+from datetime import date, datetime, time
 
 import discord
 from aiohttp import ClientTimeout, ClientSession
@@ -110,10 +110,10 @@ class F1(commands.Cog):
         await ctx.send(embed=embedPayload)
 
 
-    @tasks.loop(time=datetime.time(hour=F1_SCHEDULE_REMINDER_HOUR, minute=F1_SCHEDULE_REMINDER_MINUTE))
+    @tasks.loop(time=time(hour=F1_SCHEDULE_REMINDER_HOUR, minute=F1_SCHEDULE_REMINDER_MINUTE))
     async def nextScheduleReminder(self):
         """Sends F1 Schedule (Next Round) Reminder"""
-        if datetime.datetime.today().weekday() == F1_SCHEDULE_REMINDER_DAY:
+        if datetime.today().weekday() == F1_SCHEDULE_REMINDER_DAY:
             channel = self.client.get_channel(BOT_CHANNEL_ID)
             embedPayload = await F1.nextScheduleEmbedPayload()
             embedPayload.set_footer(text="Sourced from ergast.com/mrd")
@@ -126,11 +126,10 @@ class F1(commands.Cog):
 
         schedule = await F1.getSchedule()
         embed = discord.Embed(colour=discord.Colour.red())
-        
         embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
         for round in schedule:
-            if datetime.date.today() <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
+            if date.today() <= datetime.strptime(round["date"], "%Y-%m-%d").date():
                 title = f"Round {round['round']} {round['raceName']}"
                 payloadLst = [
                     f"**{round['Circuit']['circuitName']}**",
