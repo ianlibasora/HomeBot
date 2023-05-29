@@ -4,7 +4,7 @@ import datetime
 
 import discord
 from aiohttp import ClientTimeout, ClientSession
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 from settings import HTTP_TIMEOUT
 
@@ -100,6 +100,14 @@ class F1(commands.Cog):
     async def f1Next(self, ctx):
         """Returns F1 Schedule (Next Round)"""
 
+        embedPayload = await F1.nextScheduleEmbedPayload(ctx)
+        await ctx.send(embed=embedPayload)
+
+
+    @staticmethod
+    async def nextScheduleEmbedPayload(ctx):
+        """Returns F1 Schedule (Next Round) Embed Payload"""
+
         schedule = await F1.getSchedule()
         embed = discord.Embed(colour=discord.Colour.red())
         embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
@@ -136,10 +144,10 @@ class F1(commands.Cog):
                 payload = "\n> ".join(payloadLst)
                 msg = f"> {payload}"
                 embed.add_field(name=title, value=msg)
-                return await ctx.send(embed=embed)
+                return embed
 
         embed.add_field(name="No New F1 Races", value="No new races for the F1 season")
-        await ctx.send(embed=embed)
+        return embed
 
 
     @staticmethod
