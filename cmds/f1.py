@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-import datetime
+from datetime import date, datetime, time
 
 import discord
 from aiohttp import ClientTimeout, ClientSession
-from discord.ext import commands
+from discord.ext import commands, tasks
 
-from settings import HTTP_TIMEOUT
+from settings import HTTP_TIMEOUT, F1_SCHEDULE_REMINDER_DAY, F1_SCHEDULE_REMINDER_HOUR, F1_SCHEDULE_REMINDER_MINUTE, BOT_CHANNEL_ID
 
 
 class F1(commands.Cog):
@@ -28,6 +28,11 @@ class F1(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+        self.nextScheduleReminder.start()
+
+
+    def cog_unload(self):
+        self.nextScheduleReminder.cancel()
 
 
     @commands.command()
@@ -100,13 +105,31 @@ class F1(commands.Cog):
     async def f1Next(self, ctx):
         """Returns F1 Schedule (Next Round)"""
 
+        embedPayload = await F1.nextScheduleEmbedPayload()
+        embedPayload.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
+        await ctx.send(embed=embedPayload)
+
+
+    @tasks.loop(time=time(hour=F1_SCHEDULE_REMINDER_HOUR, minute=F1_SCHEDULE_REMINDER_MINUTE))
+    async def nextScheduleReminder(self):
+        """Sends F1 Schedule (Next Round) Reminder"""
+        if datetime.today().weekday() == F1_SCHEDULE_REMINDER_DAY:
+            channel = self.client.get_channel(BOT_CHANNEL_ID)
+            embedPayload = await F1.nextScheduleEmbedPayload()
+            embedPayload.set_footer(text="Sourced from ergast.com/mrd")
+            await channel.send(embed=embedPayload)
+
+
+    @staticmethod
+    async def nextScheduleEmbedPayload():
+        """Returns F1 Schedule (Next Round) Embed Payload"""
+
         schedule = await F1.getSchedule()
         embed = discord.Embed(colour=discord.Colour.red())
-        embed.set_footer(icon_url=ctx.author.avatar.url, text="Sourced from ergast.com/mrd")
         embed.set_author(name="F1 Schedule (Next Round)", icon_url="https://raw.githubusercontent.com/ianlibasora/HomeBot/master/images/f1.png")
 
         for round in schedule:
-            if datetime.date.today() <= datetime.datetime.strptime(round["date"], "%Y-%m-%d").date():
+            if date.today() <= datetime.strptime(round["date"], "%Y-%m-%d").date():
                 title = f"Round {round['round']} {round['raceName']}"
                 payloadLst = [
                     f"**{round['Circuit']['circuitName']}**",
@@ -136,10 +159,10 @@ class F1(commands.Cog):
                 payload = "\n> ".join(payloadLst)
                 msg = f"> {payload}"
                 embed.add_field(name=title, value=msg)
-                return await ctx.send(embed=embed)
+                return embed
 
         embed.add_field(name="No New F1 Races", value="No new races for the F1 season")
-        await ctx.send(embed=embed)
+        return embed
 
 
     @staticmethod
