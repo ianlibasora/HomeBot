@@ -18,8 +18,8 @@ async def on_ready():
     """Reports when main bot is ready"""
 
     for file in settings.COGS_DIR_PATH.iterdir():
-        if str(file).endswith(".py"):
-            await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
+        if file.suffix == ".py":
+            await client.load_extension(f"{settings.COGS_DIR}.{file.stem}")
     logger.info(f"User: {client.user} (ID: {client.user.id}). HomeMain core startup")
 
 
@@ -129,9 +129,9 @@ async def freload(ctx):
 
     try:
         for file in settings.COGS_DIR_PATH.iterdir():
-            if str(file).endswith(".py"):
-                await client.unload_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
-                await client.load_extension(f"{settings.COGS_DIR}.{file.name[:-3]}")
+            if file.suffix == ".py":
+                await client.unload_extension(f"{settings.COGS_DIR}.{file.stem}")
+                await client.load_extension(f"{settings.COGS_DIR}.{file.stem}")
         logger.info(f"User: {ctx.author} (ID: {ctx.author.id}). Reloaded all cogs")
         await ctx.send("Reloaded all cogs")
     except Exception:
